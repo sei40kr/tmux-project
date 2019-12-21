@@ -27,3 +27,7 @@ set -g @plugin 'sei40kr/tmux-per-project-session'
 | `@per-project-session-known-project-dirs`  | `''`                        | Project directories outside the workspace directories. For example, you can put `~/.dotfiles` here. You can specify multiple directories by separating them with `:`. |
 | `@per-project-session-fzf-opts`            | `'-d 15'`                   | The options to pass to `fzf-tmux`. Please see `man fzf` for available options.                                                                                        |
 | `@per-project-session-destroy-unnamed`     | `on`                        | If set to on, unnamed session will be destroyed when switching a session.                                                                                             |
+
+## Similar Projects
+
+- [zsh-fzf-projects](https://github.com/sei40kr/zsh-fzf-projects) - If you don't need tmux integration, use this instead.
