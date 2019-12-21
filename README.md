@@ -4,6 +4,7 @@ A project-orientated session manager for tmux.
 
 ## Requirements
 
+- sed
 - [fzf](https://github.com/junegunn/fzf) (with `fzf-tmux`)
 
 ## Install
