@@ -1,6 +1,6 @@
 # tmux-per-project-session
 
-A project-orientated session manager for tmux.
+A project-oriented session manager for tmux.
 
 ## Requirements
 
