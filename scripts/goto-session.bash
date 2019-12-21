@@ -21,6 +21,12 @@ tmux_option_known_project_dirs='@per-project-session-known-project-dirs'
 default_fzf_opts='-d 15'
 tmux_option_fzf_opts='@per-project-session-fzf-opts'
 
+default_open_terminal_for_new_session=off
+tmux_option_open_terminal_for_new_session='@per-project-session-open-terminal-for-new-session'
+
+default_terminal_cmd=''
+tmux_option_terminal_cmd='@per-project-session-terminal-cmd'
+
 default_destroy_unnamed=on
 tmux_option_destroy_unnamed='@per-project-session-destroy-unnamed'
 
@@ -59,6 +65,27 @@ list_project_dirs() {
     done
 }
 
+validate_tmux_title_options() {
+    local set_titles="$1"
+    local set_titles_string="$2"
+    local terminal_cmd="$3"
+
+    if [[ "$set_titles" != on ]]; then
+        tmux display-message 'Error: You need to set set-titles to on if you want to open a terminal for new session.'
+        return 1
+    fi
+
+    if [[ ! "$set_titles_string" =~ \#S ]]; then
+        tmux display-message "Error: You need to include #S in set-titles-string if you want to open a terminal for new session."
+        return 1
+    fi
+
+    if [[ -z "$terminal_cmd" ]]; then
+        tmux display-message "Error: You need to set ${tmux_option_terminal_cmd} if you want to open a terminal for new session."
+        return 1
+    fi
+}
+
 main() {
     local fzf_opts="$(get_tmux_option "$tmux_option_fzf_opts" \
                                       "$default_fzf_opts")"
@@ -75,21 +102,47 @@ main() {
         return
     fi
 
+    if [[ "$destroy_unnamed" == on ]]; then
+        local prev_session_name="$(tmux display-message -p '#S')"
+    fi
+
     project_dir="$(abbreviate_path "$project_dir")"
     session_name="$(project_dir_to_session_name "$project_dir")"
+
+    local open_terminal_for_new_session="$(get_tmux_option "$tmux_option_open_terminal_for_new_session" \
+                                                           "$default_open_terminal_for_new_session")"
+    if [[ "$open_terminal_for_new_session" == on ]]; then
+        local set_titles="$(get_tmux_option set-titles off)"
+        local set_titles_string="$(get_tmux_option set-titles-string '')"
+        local terminal_cmd="$(get_tmux_option "$tmux_option_terminal_cmd" "$default_terminal_cmd")"
+
+        validate_tmux_title_options "$set_titles" \
+                                    "$set_titles_string" \
+                                    "$terminal_cmd" || exit "$?"
+    fi
 
     if ! tmux_session_exists "$session_name"; then
         tmux new-session -dc "$project_dir" -s "$session_name"
     fi
 
-    if [[ "$destroy_unnamed" == on ]]; then
-        local prev_session_name="$(tmux display-message -p '#S')"
+    if [[ "$open_terminal_for_new_session" == on ]]; then
+        local terminal_title="${set_titles_string//#S/${session_name}}"
+
+        if ! wmctrl -F -a "$terminal_title"; then
+            eval "$(printf "${terminal_cmd} ${SHELL} -c %q" \
+                           "$(printf 'tmux attach-session -t %q' "$session_name")")" &
+            disown -h "$!"
+        fi
+    else
+        tmux switch-client -t "$session_name"
     fi
 
-    tmux switch-client -t "$session_name"
-
     if [[ "$destroy_unnamed" == on && "$prev_session_name" =~ '^[0-9]$' ]]; then
-        tmux kill-session "$prev_session_name"
+        if [[ "$open_terminal_for_new_session" == on ]]; then
+            tmux set-option detach-on-destroy on
+        fi
+
+        tmux kill-session -t "$prev_session_name"
     fi
 }
 
