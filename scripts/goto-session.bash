@@ -137,7 +137,7 @@ main() {
         tmux switch-client -t "$session_name"
     fi
 
-    if [[ "$destroy_unnamed" == on && "$prev_session_name" =~ '^[0-9]$' ]]; then
+    if [[ "$destroy_unnamed" == on && "$prev_session_name" =~ ^[[:digit:]]+$ ]]; then
         if [[ "$open_terminal_for_new_session" == on ]]; then
             tmux set-option detach-on-destroy on
         fi
