@@ -23,15 +23,15 @@ list_project_dirs() {
 
     local workspace_dirs
     # shellcheck disable=SC2155
-    local max_depth="$(tmux_get_option "$tmux_option_workspace_max_depth" \
-        "$default_workspace_max_depth")"
+    local maxdepth="$(tmux_get_option "$tmux_option_workspace_maxdepth" \
+        "$default_workspace_maxdepth")"
     IFS=':' read -r -a workspace_dirs \
         < <(tmux_get_option "$tmux_option_workspace_dirs" \
         "$default_workspace_dirs")
     for workspace_dir in "${workspace_dirs[@]}"; do
         if [[ -n "$workspace_dir" ]]; then
             find -L "$workspace_dir" \
-                -maxdepth "$((max_depth+1))" \
+                -maxdepth "$((maxdepth+1))" \
                 -type d \
                 -name '.git' |
                 filepaths_stdin_dirname

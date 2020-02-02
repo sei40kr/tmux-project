@@ -2,8 +2,8 @@
 default_workspace_dirs="${HOME}/develop/workspace"
 tmux_option_workspace_dirs='@per-project-session-workspace-dirs'
 
-default_workspace_max_depth=2
-tmux_option_workspace_max_depth='@per-project-session-workspace-max-depth'
+default_workspace_maxdepth=2
+tmux_option_workspace_maxdepth='@per-project-session-workspace-maxdepth'
 
 default_known_project_dirs=''
 tmux_option_known_project_dirs='@per-project-session-known-project-dirs'
