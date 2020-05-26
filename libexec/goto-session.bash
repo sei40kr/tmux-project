@@ -30,11 +30,16 @@ list_project_dirs() {
         "$default_workspace_dirs")
     for workspace_dir in "${workspace_dirs[@]}"; do
         if [[ -n "$workspace_dir" ]]; then
-            find -L "$workspace_dir" \
-                -maxdepth "$((maxdepth+1))" \
-                -type d \
-                -name '.git' |
-                filepaths_stdin_dirname
+            {
+                if command_exists fd; then
+                    fd -H -L -d "$((maxdepth+1))" -t d '^\.git$' "$workspace_dir"
+                else
+                    find -L "$workspace_dir" \
+                        -maxdepth "$((maxdepth+1))" \
+                        -type d \
+                        -name '.git'
+                fi
+            } | filepaths_stdin_dirname
         fi
     done
 }

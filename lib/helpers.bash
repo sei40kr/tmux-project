@@ -20,6 +20,11 @@ tmux_option_terminal_cmd='@per-project-session-terminal-cmd'
 default_destroy_unnamed=on
 tmux_option_destroy_unnamed='@per-project-session-destroy-unnamed'
 
+command_exists() {
+  local command="$1"
+  hash "$command" 2>/dev/null
+}
+
 tmux_get_option() {
     local option="$1"
     local default_value="$2"
