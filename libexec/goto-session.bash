@@ -28,9 +28,9 @@ list_project_dirs() {
     IFS=':' read -r -a workspace_dirs \
         < <(tmux_get_option "$tmux_option_workspace_dirs" \
         "$default_workspace_dirs")
-    for workspace_dir in "${workspace_dirs[@]}"; do
-        if [[ -n "$workspace_dir" && -d "$workspace_dir" ]]; then
-            {
+    {
+        for workspace_dir in "${workspace_dirs[@]}"; do
+            if [[ -n "$workspace_dir" && -d "$workspace_dir" ]]; then
                 if command_exists fd; then
                     fd -H -L -d "$((maxdepth+1))" -t d '^\.git$' "$workspace_dir"
                 else
@@ -39,9 +39,9 @@ list_project_dirs() {
                         -type d \
                         -name '.git'
                 fi
-            } | filepaths_stdin_dirname
-        fi
-    done
+            fi
+        done
+    } | filepaths_stdin_dirname
 }
 
 main() {
