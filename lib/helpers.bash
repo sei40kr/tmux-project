@@ -84,22 +84,22 @@ filepaths_stdin_dirname() {
 
 filepaths_stdin_abbreviate() {
     while read -r filepath; do
-        if [[ "${filepath:0:${#HOME}}" == "$HOME" ]]; then
-            echo "~${filepath:${#HOME}}"
-        else
-            echo "$filepath"
+        if [[ "$filepath" == ${HOME}* ]]; then
+            filepath="${filepath/${HOME}/~}"
         fi
+
+        echo "$filepath"
     done
 }
 
 filepath_expand() {
     local filepath="$1"
 
-    if [[ "${filepath:0:1}" == '~' ]]; then
-        echo "${HOME}${filepath:1}"
-    else
-        echo "$filepath"
+    if [[ "$filepath" == ~* ]]; then
+        filepath="${filepath/~/${HOME}}"
     fi
+
+    echo "$filepath"
 }
 
 filepath_to_tmux_session_name() {
