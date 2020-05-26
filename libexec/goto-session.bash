@@ -29,7 +29,7 @@ list_project_dirs() {
         < <(tmux_get_option "$tmux_option_workspace_dirs" \
         "$default_workspace_dirs")
     for workspace_dir in "${workspace_dirs[@]}"; do
-        if [[ -n "$workspace_dir" ]]; then
+        if [[ -n "$workspace_dir" && -d "$workspace_dir" ]]; then
             {
                 if command_exists fd; then
                     fd -H -L -d "$((maxdepth+1))" -t d '^\.git$' "$workspace_dir"
