@@ -6,6 +6,7 @@ A project-oriented session manager for tmux.
 
 - sed
 - [fzf](https://github.com/junegunn/fzf) (with `fzf-tmux`)
+- [fd](https://github.com/sharkdp/fd) (optional)
 
 ## Install
 
