@@ -100,7 +100,7 @@ main() {
   local fzf_tmux_opts
   local project_dir
   local session_name
-  fzf_tmux_opts="$(tmux_get_option '@per-project-session-fzf-opts' '-d 30%')"
+  fzf_tmux_opts="$(tmux_get_option '@per-project-session-fzf-tmux-opts' '-d 30%')"
 
   project_dir="$(find_projects |
     abbrev_path_stdin |
