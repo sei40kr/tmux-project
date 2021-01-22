@@ -11,15 +11,6 @@ tmux_option_known_project_dirs='@per-project-session-known-project-dirs'
 default_fzf_opts='-d 15'
 tmux_option_fzf_opts='@per-project-session-fzf-opts'
 
-default_open_terminal_for_new_session=off
-tmux_option_open_terminal_for_new_session='@per-project-session-open-terminal-for-new-session'
-
-default_terminal_cmd=''
-tmux_option_terminal_cmd='@per-project-session-terminal-cmd'
-
-default_destroy_unnamed=on
-tmux_option_destroy_unnamed='@per-project-session-destroy-unnamed'
-
 command_exists() {
   local command="$1"
   hash "$command" 2>/dev/null
@@ -35,37 +26,6 @@ tmux_get_option() {
         echo "$default_value"
     else
         echo "$option_value"
-    fi
-}
-
-tmux_validate_options() {
-    # shellcheck disable=SC2155
-    local open_terminal_for_new_session="$(tmux_get_option "$tmux_option_open_terminal_for_new_session" \
-        "$default_open_terminal_for_new_session")"
-    if [[ "$open_terminal_for_new_session" != on ]]; then
-        return
-    fi
-
-    # shellcheck disable=SC2155
-    local set_titles="$(tmux_get_option set-titles off)"
-    if [[ "$set_titles" != on ]]; then
-        tmux display-message 'Error: You must set set-titles to on if you want to open a terminal for each new session.'
-        return 1
-    fi
-
-    # shellcheck disable=SC2155
-    local set_titles_string="$(tmux_get_option set-titles-string '')"
-    if [[ ! "$set_titles_string" == *'#S'* ]]; then
-        tmux display-message "Error: You must include #S in set-titles-string if you want to open a terminal for each new session."
-        return 1
-    fi
-
-    # shellcheck disable=SC2155
-    local terminal_cmd="$(tmux_get_option "$tmux_option_terminal_cmd" \
-        "$default_terminal_cmd")"
-    if [[ -z "$terminal_cmd" ]]; then
-        tmux display-message "Error: You must set ${tmux_option_terminal_cmd} if you want to open a terminal for each new session."
-        return 1
     fi
 }
 
