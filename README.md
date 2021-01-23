@@ -4,14 +4,14 @@ A project-oriented session manager for tmux.
 
 ## Requirements
 
-- [fzf](https://github.com/junegunn/fzf) (with `fzf-tmux`)
-- [fd](https://github.com/sharkdp/fd) (optional)
+- [fzf](https://github.com/junegunn/fzf) with `fzf-tmux`
+- (optional) [fd](https://github.com/sharkdp/fd)
 
 ## Install
 
 ### Installation with [tpm](https://github.com/tmux-plugins/tpm) (recommended)
 
-Add the plugin to the list of TPM plugins in your `.tmux.conf` like below:
+Add the following line to your `.tmux.conf`.
 
 ```tmux
 set -g @plugin 'sei40kr/tmux-per-project-session'
