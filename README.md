@@ -7,6 +7,12 @@ A project-oriented session manager for tmux.
 - [fzf](https://github.com/junegunn/fzf) with `fzf-tmux`
 - (optional) [fd](https://github.com/sharkdp/fd)
 
+## Features
+
+| Key Binding (default) | Description                                     |
+|:----------------------|:------------------------------------------------|
+| `prefix + g`          | Select a project & create a new session for it. |
+
 ## Install
 
 ### Installation with [tpm](https://github.com/tmux-plugins/tpm) (recommended)
