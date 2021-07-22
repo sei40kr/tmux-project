@@ -1,16 +1,23 @@
 #!/usr/bin/env bash
-# -*- mode: sh -*-
+# -*- mode: sh; sh-shell: bash -*-
 
-basedir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# shellcheck source=lib/tmux.bash
-. "${basedir}/lib/tmux.bash"
+default_key_binding_switch="g"
+tmux_option_switch="@per-project-session-switch"
+
+# shellcheck source=scripts/helpers.sh
+. "${CURRENT_DIR}/scripts/helpers.sh"
+
+set_new_session_binding() {
+    local key
+    key="$(get_tmux_option "$tmux_option_switch" "$default_key_binding_switch")"
+
+    tmux bind-key "$key" run-shell -b "${CURRENT_DIR}/scripts/switch_session.sh"
+}
 
 main() {
-    local switch_key
-    switch_key="$(tmux_get_option "@per-project-session-switch" 'g')"
-
-    tmux bind-key "$switch_key" run-shell -b "${basedir}/libexec/switch-session"
+    set_new_session_binding
 }
 
 main

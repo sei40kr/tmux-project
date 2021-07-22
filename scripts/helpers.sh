@@ -1,4 +1,4 @@
-tmux_get_option() {
+get_tmux_option() {
   local option
   local default
   local value

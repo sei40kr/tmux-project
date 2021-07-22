@@ -1,14 +1,21 @@
 #!/usr/bin/env bash
-
-# goto-session.bash
-# author: Seong Yong-ju <sei40kr@gmail.com>
+# -*- mode: sh; sh-shell: bash -*-
 
 set -uo pipefail
 
-basedir="$(cd "$(dirname "$0")/.." && pwd)"
+CURRENT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 
-# shellcheck source=../lib/tmux.bash
-. "${basedir}/lib/tmux.bash"
+default_workspace_dirs="${HOME}/develop/workspace"
+tmux_option_workspace_dirs='@per-project-session-workspace-dirs'
+
+default_known_project_dirs=''
+tmux_option_known_project_dirs='@per-project-session-known-project-dirs'
+
+default_max_depth=2
+tmux_option_max_depth='@per-project-session-workspace-max-depth'
+
+# shellcheck source=helpers.sh
+. "${CURRENT_DIR}/helpers.sh"
 
 executable() {
   local name
@@ -64,10 +71,10 @@ find_projects() {
   local workspace_dirs
   local max_depth
   IFS=':' read -r -a workspace_dirs \
-    < <(tmux_get_option '@per-project-session-workspace-dirs' "${HOME}/develop/workspace")
+    < <(get_tmux_option "$tmux_option_workspace_dirs" "$default_workspace_dirs")
   IFS=':' read -ra known_project_dirs \
-    < <(tmux_get_option '@per-project-session-known-project-dirs' '')
-  max_depth="$(tmux_get_option '@per-project-session-workspace-max-depth' 2)"
+    < <(get_tmux_option "$tmux_option_known_project_dirs" "$default_known_project_dirs")
+  max_depth="$(get_tmux_option "$tmux_option_max_depth" $default_max_depth)"
 
   {
     for project_dir in "${known_project_dirs[@]}"; do
@@ -100,7 +107,7 @@ main() {
   local fzf_tmux_opts
   local project_dir
   local session_name
-  fzf_tmux_opts="$(tmux_get_option '@per-project-session-fzf-tmux-opts' '-d 30%')"
+  fzf_tmux_opts="$(get_tmux_option '@per-project-session-fzf-tmux-opts' '-d 30%')"
 
   project_dir="$(find_projects |
     abbrev_path_stdin |
