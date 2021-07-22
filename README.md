@@ -21,7 +21,7 @@ set -g @plugin 'sei40kr/tmux-per-project-session'
 
 | Variable                                   | Default Value               | Description                                                                                                                                                           |
 | :----------------------------------------- | :-------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@per-project-session-switch`              | `g`                         | A key binding to switch a session. The default is `prefix + g`.                                                                                                       |
+| `@per-project-session-goto`                | `g`                         | A key binding for go-to feature. The default is `prefix + g`.                                                                                                         |
 | `@per-project-session-workspace-dirs`      | `${HOME}/develop/workspace` | Workspace directories. You can specify multiple directories by separating them with `:`.                                                                              |
 | `@per-project-session-workspace-max-depth` | `2`                         | The number of max levels below the workspace directories to search projects.                                                                                          |
 | `@per-project-session-known-project-dirs`  | `''`                        | Project directories outside the workspace directories. For example, you can put `~/.dotfiles` here. You can specify multiple directories by separating them with `:`. |
