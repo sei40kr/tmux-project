@@ -3,7 +3,7 @@
 
 set -uo pipefail
 
-CURRENT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+CURRENT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 default_workspace_dirs="${HOME}/develop/workspace"
 tmux_option_workspace_dirs='@per-project-session-workspace-dirs'
