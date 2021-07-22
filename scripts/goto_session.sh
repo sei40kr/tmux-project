@@ -5,14 +5,17 @@ set -uo pipefail
 
 CURRENT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-default_workspace_dirs="${HOME}/develop/workspace"
-tmux_option_workspace_dirs='@per-project-session-workspace-dirs'
-
 default_known_project_dirs=''
 tmux_option_known_project_dirs='@per-project-session-known-project-dirs'
 
+default_workspace_dirs="${HOME}/develop/workspace"
+tmux_option_workspace_dirs='@per-project-session-workspace-dirs'
+
 default_max_depth=2
 tmux_option_max_depth='@per-project-session-workspace-max-depth'
+
+default_fzf_tmux_options='-d 30%'
+tmux_option_fzf_tmux_options='@per-project-session-fzf-tmux-options'
 
 # shellcheck source=helpers.sh
 . "${CURRENT_DIR}/helpers.sh"
@@ -107,7 +110,7 @@ main() {
   local fzf_tmux_opts
   local project_dir
   local session_name
-  fzf_tmux_opts="$(get_tmux_option '@per-project-session-fzf-tmux-opts' '-d 30%')"
+  fzf_tmux_opts="$(get_tmux_option "$tmux_option_fzf_tmux_options" "$default_fzf_tmux_options")"
 
   project_dir="$(find_projects |
     abbrev_path_stdin |
