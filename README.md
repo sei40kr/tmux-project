@@ -33,5 +33,5 @@ set -g @plugin 'sei40kr/tmux-ghq'
 
 | Variable            | Default value                    | Description                     |
 |:--------------------|:---------------------------------|:--------------------------------|
-| `FZF_TMUX_OPTS`     | ``                               | Default options for fzf-tmux    |
+| `FZF_TMUX_OPTS`     | `''`                             | Default options for fzf-tmux    |
 | `FZF_TMUX_GHQ_OPTS` | `--prompt "Switch to project: "` | Additional options for fzf-tmux |
