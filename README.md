@@ -1,17 +1,17 @@
-# tmux-per-project-session
+# tmux-ghq
 
-A project-oriented session manager for tmux.
+Select a [ghq](https://github.com/x-motemen/ghq) repository & create a session for it.
 
-## Requirements
+## Dependencies
 
+- [ghq](https://github.com/x-motemen/ghq)
 - [fzf](https://github.com/junegunn/fzf) with `fzf-tmux`
-- (optional) [fd](https://github.com/sharkdp/fd)
 
-## Features
+## Keybinds
 
-| Key Binding (default) | Description                                     |
-|:----------------------|:------------------------------------------------|
-| `prefix + g`          | Select a project & create a new session for it. |
+| Keybind (default) | Description                                                                                             |
+|:------------------|:--------------------------------------------------------------------------------------------------------|
+| `prefix + g`      | Select a repository & create a new session for it. If the session already exists, switch to it instead. |
 
 ## Install
 
@@ -20,19 +20,18 @@ A project-oriented session manager for tmux.
 Add the following line to your `.tmux.conf`.
 
 ```tmux
-set -g @plugin 'sei40kr/tmux-per-project-session'
+set -g @plugin 'sei40kr/tmux-ghq'
 ```
 
 ## Customization
 
-| Variable                                   | Default Value               | Description                                                                                                                                                           |
-| :----------------------------------------- | :-------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@per-project-session-goto`                | `g`                         | A key binding for go-to feature. The default is `prefix + g`.                                                                                                         |
-| `@per-project-session-workspace-dirs`      | `${HOME}/develop/workspace` | Workspace directories. You can specify multiple directories by separating them with `:`.                                                                              |
-| `@per-project-session-workspace-max-depth` | `2`                         | The number of max levels below the workspace directories to search projects.                                                                                          |
-| `@per-project-session-known-project-dirs`  | `''`                        | Project directories outside the workspace directories. For example, you can put `~/.dotfiles` here. You can specify multiple directories by separating them with `:`. |
-| `@per-project-session-fzf-tmux-options`    | `'-d 30%'`                  | The options to pass to `fzf-tmux`. Please see `man fzf` for available options.                                                                                        |
+| Variable                   | Default value      | Description |
+|:---------------------------|:-------------------|:------------|
+| `@ghq-create-or-switch-to` | `g` (`prefix + g`) | The keybind |
 
-## Similar Projects
+### Environment Variables
 
-- [zsh-fzf-projects](https://github.com/sei40kr/zsh-fzf-projects) - If you don't need tmux integration, use this instead.
+| Variable            | Default value                    | Description                     |
+|:--------------------|:---------------------------------|:--------------------------------|
+| `FZF_TMUX_OPTS`     | ``                               | Default options for fzf-tmux    |
+| `FZF_TMUX_GHQ_OPTS` | `--prompt "Switch to project: "` | Additional options for fzf-tmux |
