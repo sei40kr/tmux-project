@@ -7,11 +7,11 @@ Select a [ghq](https://github.com/x-motemen/ghq) repository & create a session f
 - [ghq](https://github.com/x-motemen/ghq)
 - [fzf](https://github.com/junegunn/fzf) with `fzf-tmux`
 
-## Keybinds
+## Keybindings
 
-| Keybind (default) | Description                                                                                             |
-|:------------------|:--------------------------------------------------------------------------------------------------------|
-| `prefix + g`      | Select a repository & create a new session for it. If the session already exists, switch to it instead. |
+| Keybinding (default) | Description                                                                                             |
+|:---------------------|:--------------------------------------------------------------------------------------------------------|
+| `prefix + g`         | Select a repository & create a new session for it. If the session already exists, switch to it instead. |
 
 ## Install
 
@@ -25,9 +25,9 @@ set -g @plugin 'sei40kr/tmux-ghq'
 
 ## Customization
 
-| Variable                   | Default value      | Description |
-|:---------------------------|:-------------------|:------------|
-| `@ghq-create-or-switch-to` | `g` (`prefix + g`) | The keybind |
+| Variable                   | Default value      | Description    |
+|:---------------------------|:-------------------|:---------------|
+| `@ghq-create-or-switch-to` | `g` (`prefix + g`) | The keybinding |
 
 ### Environment Variables
 
