@@ -35,3 +35,27 @@ set -g @plugin 'sei40kr/tmux-ghq'
 |:--------------------|:---------------------------------|:--------------------------------|
 | `FZF_TMUX_OPTS`     | `''`                             | Default options for fzf-tmux    |
 | `FZF_TMUX_GHQ_OPTS` | `--prompt "Switch to project: "` | Additional options for fzf-tmux |
+
+## Tips
+
+### Integrate ghq with Projectile
+
+You can integrate ghq with
+[Projectile](https://docs.projectile.mx/projectile/index.html)'s
+[Automated Project Discovery](https://docs.projectile.mx/projectile/usage.html#automated-project-discovery).
+
+To discover ghq projects (repositories) from Projectile, add the ghq root
+directory to `projectile-project-search-path`.
+
+```emacs-lisp
+(setq projectile-project-search-path '(("~/ghq" . 3)))
+```
+
+Alternatively, you can utilize [emacs-ghq](https://github.com/rcoedo/emacs-ghq)
+to find the root directory.
+
+```emacs-lisp
+(with-eval-after-load 'projectile
+  (require 'ghq)
+  (setq projectile-project-search-path (append `((,ghq--root . 3)) projectile-project-search-path)))
+```
