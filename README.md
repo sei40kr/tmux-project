@@ -59,3 +59,28 @@ to find the root directory.
   (require 'ghq)
   (setq projectile-project-search-path (append `((,ghq--root . 3)) projectile-project-search-path)))
 ```
+
+### Integrate ghq with Magit
+
+You can integrate ghq with [Magit](https://magit.vc)'s [Repository List](https://magit.vc/manual/magit/Repository-List.html).
+
+To discover ghq's projects (repositories) from Projectile, add the ghq root
+directory to `magit-repository-directories`.
+
+```emacs-lisp
+(setq magit-repository-directories '(("~/ghq" . 3))
+```
+
+You can utilize [emacs-ghq](https://github.com/rcoedo/emacs-ghq) to find the root
+directory and replace `magit-clone`.
+
+```emacs-lisp
+(defun ghq-clone (repo)
+  (interactive "sClone from url or name: ")
+  (require 'ghq)
+  (ghq--get-repository repo))
+
+(with-eval-after-load 'magit
+  (require 'ghq)
+  (setq magit-repository-directories (append `((,ghq--root . 3)) magit-repository-directories)))
+```
