@@ -56,3 +56,7 @@ For example, if you want to add `~/.vim` itself as a repository:
 ```tmux
 set -ag @project-base-dirs ,"${HOME}/.vim"
 ```
+
+## License
+
+MIT
