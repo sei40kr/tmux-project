@@ -57,6 +57,14 @@ For example, if you want to add `~/.vim` itself as a repository:
 set -ag @project-base-dirs ,"${HOME}/.vim"
 ```
 
+## Differences from tmuxinator
+
+Basically [tmuxinator](https://github.com/tmuxinator/tmuxinator) has much more
+features than tmux-project, but tmux-project aims zero-configuration.
+You can switch to a new project you cloned without any configurations.
+
+I'm planning to integrate tmux-project with tmuxinator in the future.
+
 ## License
 
 MIT
