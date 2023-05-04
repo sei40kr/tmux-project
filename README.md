@@ -1,17 +1,11 @@
-# tmux-ghq
+# tmux-project
 
-Select a [ghq](https://github.com/x-motemen/ghq) repository & create a session for it.
+Search projects and open them in a new session.
 
-## Dependencies
+## Prequisites
 
-- [ghq](https://github.com/x-motemen/ghq)
-- [fzf](https://github.com/junegunn/fzf) with `fzf-tmux`
-
-## Keybindings
-
-| Keybinding (default) | Description                                                                                             |
-|:---------------------|:--------------------------------------------------------------------------------------------------------|
-| `prefix + g`         | Select a repository & create a new session for it. If the session already exists, switch to it instead. |
+- find
+- [fzf](https://github.com/junegunn/fzf) (needs `fzf-tmux` to be installed)
 
 ## Install
 
@@ -20,67 +14,45 @@ Select a [ghq](https://github.com/x-motemen/ghq) repository & create a session f
 Add the following line to your `.tmux.conf`.
 
 ```tmux
-set -g @plugin 'sei40kr/tmux-ghq'
+set -g @plugin 'sei40kr/tmux-project'
 ```
 
 ## Customization
 
-| Variable                   | Default value      | Description    |
-|:---------------------------|:-------------------|:---------------|
-| `@ghq-create-or-switch-to` | `g` (`prefix + g`) | The keybinding |
+| Variable                        | Default value         | Description                                                                        |
+| :------------------------------ | :-------------------- | :--------------------------------------------------------------------------------- |
+| `@project-key`                  | `"g"`                 | The key to invoke the project search. If you set it to `""`, the key is disabled.  |
+| `@project-base-dirs`            | `""`                  | A comma-separated list of directories and their depths to search for repositories. |
+| `@project-rooters`              | `".git"`              | A comma-separated list of rooters.                                                 |
+| `@project-fzf-tmux-layout-opts` | `"--preview 'ls {}'"` | The layout options for fzf-tmux. See `fzf-tmux(1)` for details.                    |
+| `@project-fzf-opts`             | `""`                  | The options for fzf. See `fzf(1)` for details.                                     |
 
-### Environment Variables
+### Setting `@project-base-dirs`
 
-| Variable            | Default value                    | Description                     |
-|:--------------------|:---------------------------------|:--------------------------------|
-| `FZF_TMUX_OPTS`     | `''`                             | Default options for fzf-tmux    |
-| `FZF_TMUX_GHQ_OPTS` | `--prompt "Switch to project: "` | Additional options for fzf-tmux |
+`@project-base-dirs` is a comma-separated list of directories and their depths to search for repositories.
 
-## Tips
+Each element of the list is in the following format:
 
-### Integrate ghq with Projectile
-
-You can integrate ghq with
-[Projectile](https://docs.projectile.mx/projectile/index.html)'s
-[Automated Project Discovery](https://docs.projectile.mx/projectile/usage.html#automated-project-discovery).
-
-To discover ghq projects (repositories) from Projectile, add the ghq root
-directory to `projectile-project-search-path`.
-
-```emacs-lisp
-(setq projectile-project-search-path '(("~/ghq" . 3)))
+```
+/path/to/dir[:<min depth>[:<max depth>]]
 ```
 
-Alternatively, you can utilize [emacs-ghq](https://github.com/rcoedo/emacs-ghq)
-to find the root directory.
+- If you omit `<min depth>` and `<max depth>`, they are set to `0` and `0` respectively.
+- If you omit `<max depth>`, it is set to `<min depth>`. (means `<min depth>` is the exact depth)
 
-```emacs-lisp
-(with-eval-after-load 'projectile
-  (require 'ghq)
-  (setq projectile-project-search-path (append `((,ghq--root . 3)) projectile-project-search-path)))
+If you omit the depth or explicitly set it to `0`, the directory itself will be
+added as a repository.
+
+---
+
+For example, if you want to search for ghq repositories:
+
+```tmux
+set -ag @project-base-dirs "${GHQ_ROOT}:3"
 ```
 
-### Integrate ghq with Magit
+For example, if you want to add `~/.vim` itself as a repository:
 
-You can integrate ghq with [Magit](https://magit.vc)'s [Repository List](https://magit.vc/manual/magit/Repository-List.html).
-
-To discover ghq's projects (repositories) from Projectile, add the ghq root
-directory to `magit-repository-directories`.
-
-```emacs-lisp
-(setq magit-repository-directories '(("~/ghq" . 3))
-```
-
-You can utilize [emacs-ghq](https://github.com/rcoedo/emacs-ghq) to find the root
-directory and replace `magit-clone`.
-
-```emacs-lisp
-(defun ghq-clone (repo)
-  (interactive "sClone from url or name: ")
-  (require 'ghq)
-  (ghq--get-repository repo))
-
-(with-eval-after-load 'magit
-  (require 'ghq)
-  (setq magit-repository-directories (append `((,ghq--root . 3)) magit-repository-directories)))
+```tmux
+set -ag @project-base-dirs ,"${HOME}/.vim"
 ```
