@@ -72,7 +72,8 @@ main() {
 	# session and attach to it.
 	if ! tmux has-session -t "$session_name" 2>/dev/null; then
 		# Return 0 even if creating the session fails.
-		tmux new-session -d -s "$session_name" -c "$selected_path" || :
+		tmux new-session -d -s "$session_name" -c "$selected_path" \; \
+			set -t "$session_name" destroy-unattached off || :
 	fi
 	tmux switch-client -t "$session_name"
 }
