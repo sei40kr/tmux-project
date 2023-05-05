@@ -17,6 +17,15 @@ Add the following line to your `.tmux.conf`.
 set -g @plugin 'sei40kr/tmux-project'
 ```
 
+---
+
+It is also recommended to add the following line to your `.tmux.conf` to prevent
+a client from being detached when the active session is destroyed.
+
+```tmux
+set detach-on-destroy no-detached
+```
+
 ## Customization
 
 | Variable                        | Default value         | Description                                                                       |
