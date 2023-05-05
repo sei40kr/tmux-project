@@ -76,6 +76,13 @@ main() {
 		return 0
 	fi
 
+	# If the selected project has .tmuxinator.yml file, use tmuxinator to
+	# start the session.
+	if command -v tmuxinator &>/dev/null && [[ -f "${selected_path}/.tmuxinator.yml" ]]; then
+		tmuxinator start -p "${selected_path}/.tmuxinator.yml"
+		return 0
+	fi
+
 	session_name="$(to_session_name "$selected_path")"
 
 	# If the session already exists, attach to it. Otherwise, create a new

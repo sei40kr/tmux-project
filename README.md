@@ -58,13 +58,12 @@ For example, if you want to add `~/.vim` itself as a project:
 set -ag @project-base-dirs ,"${HOME}/.vim"
 ```
 
-## Differences from tmuxinator
+## tmuxinator Integration
 
-Basically [tmuxinator](https://github.com/tmuxinator/tmuxinator) has much more
-features than tmux-project, but tmux-project aims zero-configuration.
-You can switch to a new project you cloned without any configurations.
-
-I'm planning to integrate tmux-project with tmuxinator in the future.
+tmux-project can be integrated with [tmuxinator](https://github.com/tmuxinator/tmuxinator).
+When you have tmuxinator installed and the selected project has
+`.tmuxinator.yml` at the root, tmux-project will start a new session with
+tmuxinator.
 
 ## License
 
