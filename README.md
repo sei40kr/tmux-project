@@ -48,7 +48,7 @@ added as a repository.
 For example, if you want to search for ghq repositories:
 
 ```tmux
-set -ag @project-base-dirs "${GHQ_ROOT}:3"
+set -ag @project-base-dirs ,"${GHQ_ROOT}:3"
 ```
 
 For example, if you want to add `~/.vim` itself as a repository:
