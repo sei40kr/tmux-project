@@ -24,8 +24,8 @@ set -g @plugin 'sei40kr/tmux-project'
 | `@project-key`                  | `"g"`                 | The key to invoke the project search. If you set it to `""`, the key is disabled.  |
 | `@project-base-dirs`            | `""`                  | A comma-separated list of directories and their depths to search for repositories. |
 | `@project-rooters`              | `".git"`              | A comma-separated list of rooters.                                                 |
-| `@project-fzf-tmux-layout-opts` | `"--preview 'ls {}'"` | The layout options for fzf-tmux. See `fzf-tmux(1)` for details.                    |
-| `@project-fzf-opts`             | `""`                  | The options for fzf. See `fzf(1)` for details.                                     |
+| `@project-fzf-tmux-layout-opts` | `""`                  | The layout options for fzf-tmux. See `fzf-tmux(1)` for details.                    |
+| `@project-fzf-opts`             | `"--preview 'ls {}'"` | The options for fzf. See `fzf(1)` for details.                                     |
 
 ### Setting `@project-base-dirs`
 
