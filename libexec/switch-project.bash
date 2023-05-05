@@ -27,10 +27,20 @@ find_projects() {
 		min_depth="${tmp[1]:-0}"
 		max_depth="${tmp[2]:-${min_depth}}"
 
-		find "$path" -mindepth "$((min_depth + 1))" \
-			-maxdepth "$((max_depth + 1))" \
-			"${rooter_opts[@]}" \
-			-printf '%h\n'
+		if [[ min_depth -eq 0 && max_depth -eq 0 ]]; then
+			# If min_depth and max_depth are both 0, that means we
+			# want to add the base_dir itself as a project.
+			# In that case, add the base_dir as a project even if it
+			# contains no rooter.
+			if [[ -d "$path" || -L "$path" ]]; then
+				echo "$path"
+			fi
+		else
+			find "$path" -mindepth "$((min_depth + 1))" \
+				-maxdepth "$((max_depth + 1))" \
+				"${rooter_opts[@]}" \
+				-printf '%h\n'
+		fi
 	done
 }
 

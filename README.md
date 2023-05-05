@@ -41,7 +41,8 @@ Each element of the list is in the following format:
 - If you omit `<max depth>`, it is set to `<min depth>`. (means `<min depth>` is the exact depth)
 
 If you omit the depth or explicitly set it to `0`, the directory itself will be
-added as a repository.
+added as a repository. In that case, you can add the directory as a repository
+even if it contains no rooter.
 
 ---
 
