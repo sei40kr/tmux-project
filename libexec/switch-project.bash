@@ -39,7 +39,7 @@ find_projects() {
 			find "$path" -mindepth "$((min_depth + 1))" \
 				-maxdepth "$((max_depth + 1))" \
 				"${rooter_opts[@]}" \
-				-printf '%h\n'
+				-exec dirname {} +
 		fi
 	done
 }
